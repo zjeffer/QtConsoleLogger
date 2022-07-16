@@ -5,7 +5,6 @@
 #include <g3log/logmessage.hpp>
 #include <iomanip>
 
-
 enum LogColor {
 	RESET,
 	WHITE = 97,
@@ -50,15 +49,17 @@ class CustomSink {
 
 class StdoutSink : public CustomSink {
 	public:
-	void callback(g3::LogMessageMover log) override {
-		std::cout << log.get().toString(CustomSink::FormatMsg) << std::flush;
-	}
+		void callback(g3::LogMessageMover log) override;
 };
+
+class MainWindow;
 
 class QtConsoleSink : public CustomSink {
 	public:
-	void callback(g3::LogMessageMover log) override {
-		// TODO: implement way to send log to Qt console widget
-		
-	}
+		QtConsoleSink(MainWindow* window);
+
+		void callback(g3::LogMessageMover log) override;
+
+	private:
+		MainWindow* m_Window;
 };

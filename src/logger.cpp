@@ -1,6 +1,9 @@
 #include "logger.hpp"
 
-Logger::Logger() {
+Logger::Logger(MainWindow* window) {
+	stdoutSink = std::make_unique<StdoutSink>();
+	qtConsoleSink = std::make_unique<QtConsoleSink>(window);
+
 	initialize();
 }
 
@@ -15,8 +18,8 @@ void Logger::destroy(){
 
 void Logger::initialize() {
 	logWorker = g3::LogWorker::createLogWorker();
-	stdoutSink = std::make_unique<StdoutSink>();
 	logWorker->addSink(std::move(stdoutSink), &StdoutSink::callback);
+	logWorker->addSink(std::move(qtConsoleSink), &QtConsoleSink::callback);
 
 	g3::initializeLogging(logWorker.get());
 }

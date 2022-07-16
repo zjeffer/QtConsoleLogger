@@ -6,11 +6,13 @@
 #include <g3log/logworker.hpp>
 #include <g3log/loglevels.hpp>
 
-#include "customSink.hpp"
+#include "sinks.hpp"
+
+class MainWindow;
 
 class Logger {
   public:
-    Logger();
+    Logger(MainWindow* window);
     ~Logger();
 
     void destroy();
@@ -18,6 +20,6 @@ class Logger {
   private:
     std::unique_ptr<g3::LogWorker> logWorker;
     std::unique_ptr<StdoutSink> stdoutSink;
-	std::unique_ptr<QtConsoleSink> qtConsoleSink;
+	  std::unique_ptr<QtConsoleSink> qtConsoleSink;
     void initialize();
 };

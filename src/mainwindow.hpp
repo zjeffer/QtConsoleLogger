@@ -1,5 +1,4 @@
-#ifndef MAINWINDOW_HPP
-#define MAINWINDOW_HPP
+#pragma once
 
 #include <QMainWindow>
 #include "console.hpp"
@@ -10,11 +9,12 @@ class MainWindow : public QMainWindow
 	Q_OBJECT
 public:
 	explicit MainWindow(QWidget *parent = nullptr);
+	~MainWindow();
+
+	void print(const std::string &text);
 
 private:
 	Console* m_Console;
 
-	Logger* m_logger;
+	std::unique_ptr<Logger> m_Logger;
 };
-
-#endif // MAINWINDOW_HPP
