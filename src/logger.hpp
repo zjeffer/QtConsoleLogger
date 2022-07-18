@@ -21,5 +21,4 @@ class Logger {
     std::unique_ptr<g3::LogWorker> logWorker;
     std::unique_ptr<StdoutSink> stdoutSink;
 	  std::unique_ptr<QtConsoleSink> qtConsoleSink;
-    void initialize();
 };

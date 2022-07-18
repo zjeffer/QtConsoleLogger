@@ -18,7 +18,7 @@ enum LogColor {
 #define RESET_COLOR "\x1b[" << int(LogColor::RESET) << "m"
 
 class CustomSink {
-	public:
+  public:
 	virtual void callback(g3::LogMessageMover log) = 0;
 
 	static LogColor getColor(const LEVELS level){
@@ -33,33 +33,26 @@ class CustomSink {
 				return LogColor::RED;
 		}
 		return g3::internal::wasFatal(level) ? LogColor::RED : LogColor::WHITE;
-	}
-
-	static std::string FormatMsg(const g3::LogMessage& msg) {
-		std::stringstream ss;
-		LogColor color = CustomSink::getColor(msg._level);
-		ss << ADD_COLOR(color) 
-			<< "[" << msg.timestamp("%H:%M:%S") << "]"
-			<< "[" << std::setw(7) << msg.level() << "/"
-			<< msg.file() << ":" << msg.line() << "] "
-			<< RESET_COLOR;
-		return ss.str();
-	}
+	} 
 };
 
 class StdoutSink : public CustomSink {
-	public:
-		void callback(g3::LogMessageMover log) override;
+  public:
+	void callback(g3::LogMessageMover log) override;
+
+	static std::string FormatMsg(const g3::LogMessage& msg);
 };
 
 class MainWindow;
 
 class QtConsoleSink : public CustomSink {
-	public:
-		QtConsoleSink(MainWindow* window);
+  public:
+    QtConsoleSink(MainWindow *window);
 
-		void callback(g3::LogMessageMover log) override;
+    void callback(g3::LogMessageMover log) override;
 
-	private:
-		MainWindow* m_Window;
+	static std::string FormatMsg(const g3::LogMessage& msg);
+
+  private:
+    MainWindow *m_Window;
 };

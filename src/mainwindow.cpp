@@ -12,14 +12,9 @@ MainWindow::MainWindow(QWidget *parent)
 
 	// add widget to main window
 	this->setCentralWidget(m_Console);
-
-	
 }
 
 MainWindow::~MainWindow(){
-	m_Logger->destroy();
-	m_Logger.reset();
-	
 	delete m_Console;
 }
 
