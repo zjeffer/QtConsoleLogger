@@ -2,7 +2,7 @@ FROM ghcr.io/zjeffer/devcontainer:latest
 
 WORKDIR /app
 
-RUN pacman -Sy --noconfirm qt6
+RUN pacman -Syu --noconfirm qt6
 
 # add user
 ################# USER & GROUP CREATION #################
