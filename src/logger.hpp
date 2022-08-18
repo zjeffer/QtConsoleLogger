@@ -17,8 +17,14 @@ class Logger {
 
     void destroy();
 
+    const std::unique_ptr<g3::LogWorker>& getLogWorker() const;
+    const std::unique_ptr<StdoutSink>& getStdoutSink() const;
+    const std::unique_ptr<QtConsoleSink>& getQtConsoleSink() const;
+
   private:
-    std::unique_ptr<g3::LogWorker> logWorker;
-    std::unique_ptr<StdoutSink> stdoutSink;
-	  std::unique_ptr<QtConsoleSink> qtConsoleSink;
+    std::unique_ptr<g3::LogWorker> m_LogWorker;
+    std::unique_ptr<StdoutSink> m_StdoutSink;
+	  std::unique_ptr<QtConsoleSink> m_QtConsoleSink;
+
+
 };

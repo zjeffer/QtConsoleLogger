@@ -1,22 +1,34 @@
 #include "logger.hpp"
 
 Logger::Logger(MainWindow* window) {
-	stdoutSink = std::make_unique<StdoutSink>();
-	qtConsoleSink = std::make_unique<QtConsoleSink>(window);
+	m_StdoutSink = std::make_unique<StdoutSink>();
+	m_QtConsoleSink = std::make_unique<QtConsoleSink>(window);
 
-	logWorker = g3::LogWorker::createLogWorker();
-	logWorker->addSink(std::move(stdoutSink), &StdoutSink::callback);
-	logWorker->addSink(std::move(qtConsoleSink), &QtConsoleSink::callback);
+	m_LogWorker = g3::LogWorker::createLogWorker();
+	m_LogWorker->addSink(std::move(m_StdoutSink), &StdoutSink::callback);
+	m_LogWorker->addSink(std::move(m_QtConsoleSink), &QtConsoleSink::callback);
 
-	g3::initializeLogging(logWorker.get());
+	g3::initializeLogging(m_LogWorker.get());
 }
 
 Logger::~Logger(){
 	destroy();
 }
 
+const std::unique_ptr<g3::LogWorker>& Logger::getLogWorker() const {
+	return m_LogWorker;
+}
+
+const std::unique_ptr<StdoutSink>& Logger::getStdoutSink() const {
+	return m_StdoutSink;
+}
+
+const std::unique_ptr<QtConsoleSink>& Logger::getQtConsoleSink() const {
+	return m_QtConsoleSink;
+}
+
 void Logger::destroy(){
 	std::cout << "Destroying logger" << std::endl;
-	logWorker->removeAllSinks();
-	logWorker.reset();
+	m_LogWorker->removeAllSinks();
+	m_LogWorker.reset();
 }
