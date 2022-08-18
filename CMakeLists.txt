@@ -55,7 +55,7 @@ target_compile_options(${PROJECT_NAME} PRIVATE
     -Wunknown-pragmas  -Wunreachable-code -Wunused
     -Wunused-function  -Wunused-label  -Wunused-parameter
     -Wunused-value  -Wunused-variable  -Wvariadic-macros
-    # -Wshadow
+    -Wshadow
     -Wvolatile-register-var  -Wwrite-strings)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
