@@ -1,24 +1,17 @@
 #include "mainwindow.hpp"
-
-
+#include "./ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-	: QMainWindow{parent}
-{
-	m_Logger = std::make_unique<Logger>(this);
-
-	// create Console widget
-	m_Console = new Console{this};
+	: QMainWindow{parent}, m_Ui(new Ui::MainWindow), m_Console(new Console),
+	  m_Logger(std::make_unique<Logger>(this)) {
+	m_Ui->setupUi(this);
 
 	// add widget to main window
-	this->setCentralWidget(m_Console);
+	setCentralWidget(m_Console);
+
+	connect(m_Console, &Console::getData, m_Console, &Console::putData);
 }
 
-MainWindow::~MainWindow(){
-	delete m_Console;
-}
+MainWindow::~MainWindow() { delete m_Console; }
 
-
-void MainWindow::print(const std::string &text) {
-	this->m_Console->putData(text.c_str());
-}
+Console *MainWindow::getConsole() const { return m_Console; }
